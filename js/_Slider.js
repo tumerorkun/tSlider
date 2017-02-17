@@ -45,7 +45,7 @@
           //$('#NavBtn').children().off('click');
           siradaki('art');
           $('.slides').append('<div id="slide' + $i + '" class="slide"><img src="' + photos[$i].location + '/' + photos[$i].name + '.' + photos[$i].ext + '"></div>');
-          $('.active').fadeOut(ayarlar.speed,function(){this.remove();$('#slide2').addClass('active');});
+          $('.active').fadeOut(ayarlar.speed,function(){this.remove();$('#slide'+$i).addClass('active');});
         }
 
 
