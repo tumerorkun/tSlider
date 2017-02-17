@@ -25,7 +25,7 @@
         $.each(data.photos, function(key, val) {
           photos[val.number] = {name: val.name ,ext: val.ext ,location: val.location } ;
         });
-        $('.slides').append('<div id=slide"' + $i + '" class="slide active"><img src="' + photos[$i].location + '/' + photos[$i].name + '.' + photos[$i].ext + '"></div>');
+        $('.slides').append('<div id="slide' + $i + '" class="slide active"><img src="' + photos[$i].location + '/' + photos[$i].name + '.' + photos[$i].ext + '"></div>');
     });
 
         var ayarlar = $.extend({
