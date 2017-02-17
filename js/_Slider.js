@@ -5,21 +5,21 @@
     var ilk = this;var photos =  {}; var $i = 1;
     function siradaki(a){
       if( a == 'art' ){
-        if( $i >= Object.keys(photos).length){
-          $i = 1;
-        }
-        else{
-          $i++;
-        }
+        if( $i >= Object.keys(photos).length){$i = 1;}
+        else{$i++;}
       }
       else if( a == 'azal'){
-        if( $i < 1){
-          $i = Object.keys(photos).length;
-        }
-        else{
-          $i--;
-        }
+        if( $i < 1){$i = Object.keys(photos).length;}
+        else{$i--;}
       }
+    }
+    function yukle(){
+      $('.slide').before('<div id="slide' + $i + '" class="slide active"><img src="' + photos[$i].location + '/' + photos[$i].name + '.' + photos[$i].ext + '"></div>').ready(function(){
+          $('.slides .slide:last').animate({
+                  opacity: '0'
+                }, 1000, function () {
+                    $('.slide:gt(0)').remove();
+                });});
     }
     $.getJSON('photoList.json', function(data) {
         $.each(data.photos, function(key, val) {
@@ -37,17 +37,14 @@
             NavBtnsID: 'NavBtn'
         }, options );
 
-
         this.prevBtn = function(){
-          alert('prevBtn');
+          siradaki('azal');
+          yukle();
         }
         this.nextBtn = function(){
-          //$('#NavBtn').children().off('click');
           siradaki('art');
-          $('.slides').append('<div id="slide' + $i + '" class="slide"><img src="' + photos[$i].location + '/' + photos[$i].name + '.' + photos[$i].ext + '"></div>');
-          $('.active').fadeOut(ayarlar.speed,function(){this.remove();$('#slide'+$i).addClass('active');});
+          yukle();
         }
-
 
     $('#' + ayarlar.NavBtnsID).children().on('click' , function() {
       $.isFunction(ilk[$(this).data('call')]) && ilk[$(this).data('call')]();
