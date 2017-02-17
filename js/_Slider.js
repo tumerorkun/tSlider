@@ -21,6 +21,7 @@
                     $('.slide:gt(0)').remove();
                 });});
     }
+    function sur(){siradaki('art');yukle();}
     $.getJSON('photoList.json', function(data) {
         $.each(data.photos, function(key, val) {
           photos[val.number] = {name: val.name ,ext: val.ext ,location: val.location } ;
