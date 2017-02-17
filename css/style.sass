@@ -1,0 +1,51 @@
+*
+  margin: 0
+  padding: 0
+body
+  margin: 15px 15px 0 15px
+.btn
+  position: absolute
+  width: 110px
+  height: 40px
+  top: 50%
+  transform: translateY(-50%)
+  i
+    position: absolute
+    height: 40px
+    width: 55px
+    font-size: 30px
+    line-height: 40px
+    background: rgba(0,0,0,0.7)
+    cursor: pointer
+    padding: 0 15px
+#Slider_Plugin
+  position: relative
+  overflow: hidden
+  width: 100%
+  max-width: 900px
+  height: 450px
+  margin-left: 50%
+  transform: translateX(-50%)
+  background: #ddd
+  #NavigationToSlide, #NavBtn
+    z-index: 99
+    position: absolute
+    width: 100%
+    height: 100%
+    background: rgba(0,0,0,0)
+    i
+      color: #fff
+    #prevBtn
+      @extend .btn
+      
+    #nextBtn
+      @extend .btn
+      right: 0
+      i
+        right: 0
+        text-align: right
+  .slide
+    img
+      position: absolute
+      width: 100%
+      height: 100%
