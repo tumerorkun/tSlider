@@ -1,0 +1,2 @@
+# tSlider
+jQuery Slider Plugin
