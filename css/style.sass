@@ -2,7 +2,7 @@
   margin: 0
   padding: 0
 body
-  margin: 15px 15px 0 15px
+  margin: 15px
 .btn
   position: absolute
   width: 70px
@@ -20,11 +20,11 @@ body
     font-size: 30px
     line-height: 60px
     padding: 0 30px
-#Slider_Plugin
+#tSlider
   position: relative
   overflow: hidden
   width: 100%
-  max-width: 900px
+  max-width: 1000px
   height: 450px
   margin-left: 50%
   transform: translateX(-50%)
@@ -33,7 +33,7 @@ body
     .slide
       img
         //transform: scale(0.8999) perspective( 700px ) rotateY(-10deg)
-  #NavigationToSlide, #NavBtn
+  #tSliderBtns
     z-index: 99
     position: absolute
     width: 100%
@@ -78,7 +78,7 @@ body
         background: #fff
         height: 5px
         margin-top: -2px
-    .active
+    .activeL
       background: #fff
       height: 5px
       margin-top: -2px
