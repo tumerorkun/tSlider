@@ -10,14 +10,8 @@
         ilk.lines();
     });
     this.siradaki = function (a){
-      if( a == 'art' ){
-        if( $i >= $sa){$i = 1;}
-        else{$i++;}
-      }
-      else if( a == 'azal'){
-        if( $i <= 1){$i = $sa;}
-        else{$i--;}
-      }
+      if( a == 'art' ){if( $i >= $sa){$i = 1;}else{$i++;}}
+      else if( a == 'azal'){if( $i <= 1){$i = $sa;}else{$i--;}}
     }
     this.yukle = function (hangi){
       $('.slide').before('<div id="slide' + hangi + '" class="slide"><img src="' + photos[hangi].location + '/' + photos[hangi].name + '.' + photos[hangi].ext + '"></div>').ready(function(){
@@ -28,50 +22,49 @@
                     $('.slide').addClass('active');
                 });});
     }
-        var ayarlar = $.extend({
-            // Defaults.
-            speed: 1000,
-            wait: 4000,
-            lines: true,
-            autoplay: true,
-            NavBtnsID: 'NavBtn'
-        }, options );
-        this.NavBtns = function(){
-          ilk.append('<div id="NavBtn"><div id="prevBtn" data-call="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div><div id="nextBtn" data-call="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div></div>');
-        }
-        ilk.NavBtns();
-        this.lines = function(){
-          ilk.append('<div id="tSliderLines" class="lines"></div>');
-          for (var $say = 1; $say <= $sa ; $say++){
-            if($say === 1){ var $class = 'active';}else{$class = '';}
-            $('#tSliderLines').append('<div class="tSliderline '+$class+'" data-call="lineBtn" data-slide="slide'+$say+'"></div>');
-          }
-          $('.tSliderline').on('click',function(){
-            $(this).parent().children().removeClass('active');
-            $(this).addClass('active');
-            ilk.lineBtn($(this).data('slide'));
-          })
-        }
-        this.prev = function(){
-          ilk.siradaki('azal');
-          ilk.yukle($i);
-          $('#tSliderLines').children().removeClass('active');
-          $a = $i - 1;
-          $('#tSliderLines').find('div:eq('+$a+')').addClass('active');
-        }
-        this.next = function(){
-          ilk.siradaki('art');
-          ilk.yukle($i);
-          $('#tSliderLines').children().removeClass('active');
-          $a = $i - 1;
-          $('#tSliderLines').find('div:eq('+$a+')').addClass('active');
-        }
-        this.lineBtn = function(which){
-          which = parseInt(which.split('slide')[1]);
-          $i = which;
-          ilk.yukle($i);
-        }
-
+    var ayarlar = $.extend({
+      // Defaults.
+      speed: 1000,
+      wait: 4000,
+      lines: true,
+      autoplay: true,
+      NavBtnsID: 'NavBtn'
+    }, options );
+    this.NavBtns = function(){
+      ilk.append('<div id="NavBtn"><div id="prevBtn" data-call="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div><div id="nextBtn" data-call="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div></div>');
+    }
+    ilk.NavBtns();
+    this.lines = function(){
+      ilk.append('<div id="tSliderLines" class="lines"></div>');
+      for (var $say = 1; $say <= $sa ; $say++){
+        if($say === 1){ var $class = 'active';}else{$class = '';}
+        $('#tSliderLines').append('<div class="tSliderline '+$class+'" data-call="lineBtn" data-slide="slide'+$say+'"></div>');
+      }
+      $('.tSliderline').on('click',function(){
+        $(this).parent().children().removeClass('active');
+        $(this).addClass('active');
+        ilk.lineBtn($(this).data('slide'));
+      })
+    }
+    this.prev = function(){
+      ilk.siradaki('azal');
+      ilk.yukle($i);
+      $('#tSliderLines').children().removeClass('active');
+      $a = $i - 1;
+      $('#tSliderLines').find('div:eq('+$a+')').addClass('active');
+    }
+    this.next = function(){
+      ilk.siradaki('art');
+      ilk.yukle($i);
+      $('#tSliderLines').children().removeClass('active');
+      $a = $i - 1;
+      $('#tSliderLines').find('div:eq('+$a+')').addClass('active');
+    }
+    this.lineBtn = function(which){
+      which = parseInt(which.split('slide')[1]);
+      $i = which;
+      ilk.yukle($i);
+    }
     $('#' + ayarlar.NavBtnsID).children().on('click' , function() {
       $.isFunction(ilk[$(this).data('call')]) && ilk[$(this).data('call')]();
     });
