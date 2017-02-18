@@ -2,13 +2,13 @@
 	$.fn.slider = function( options ){
     this.zaman;var ilk = this;var photos =  {}; var $i = 1; var $sa;
     var ayarlar = $.extend({
-      // Defaults.
+      // Varsayılanlar
       speed: 1000,
       wait: 2000,
       lines: true,
       autoplay: true,
-      effect: 'fade',
-      NavBtnsID: 'tSliderBtns'
+      navonhover: false,
+      effect: 'fade'
     }, options );
     $.getJSON('img/photoList.json', function(data) {
       $.each(data.photos, function(key, val) {
@@ -31,17 +31,35 @@
                   }, ayarlar.speed, function () {
                     $('.slide:gt(0)').remove();
                     $('.slide').addClass('activeS');
-                    $a = $i - 1;
-                    $('#tSliderLines').find('div:eq('+$a+')').addClass('activeL').siblings().removeClass('activeL');
+                    var $bas = $i - 1;
+                    $('#tSliderLines').find('div:eq('+$bas+')').addClass('activeL').siblings().removeClass('activeL');
                   });
             break;
         }
-            }).each(function(){if(this.complete){$(this).load();}});
+
+      });      
     }
     this.NavBtns = function(){
       ilk.append('<div id="tSliderBtns"><div id="prevBtn" class="Navbtn" data-call="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div><div id="nextBtn" class="Navbtn" data-call="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div></div>');
     }
-    
+    this.NavBtnsGizleGoster = function(a,b=0){
+      if(ayarlar.navonhover){
+        if(a == 1){
+          var wdth = $('#tSliderBtns').delay(b).width() + 300;
+          $('#tSliderBtns').animate({
+            width: wdth,
+            'margin-left': '-150px'
+          },500);
+        }
+        else{
+          $('#tSliderBtns').animate(
+              {
+                width:$('#tSlider').width(),
+                'margin-left':0
+              },500); 
+        }
+      }
+    }
     this.lines = function(){
       ilk.append('<div id="tSliderLines" class="lines"></div>');
       for (var $say = 1; $say <= $sa ; $say++){
@@ -71,8 +89,16 @@
           ilk.next();
       },  ayarlar.wait);
     }
-    this.hover(function(){ clearInterval(zaman); }, function(){ ilk.autoplay(); });
-    ilk.autoplay();ilk.NavBtns();
+    this.hover(
+      function(){
+        clearInterval(zaman);
+        ilk.NavBtnsGizleGoster(0);
+      },
+      function(){
+        ilk.autoplay();ilk.NavBtnsGizleGoster(1);
+      }
+    );
+    ilk.autoplay();ilk.NavBtns();ilk.NavBtnsGizleGoster(1,2000);
     $('#tSliderBtns').children().on('click' , function() {
       $.isFunction(ilk[$(this).data('call')]) && ilk[$(this).data('call')]();
     });
@@ -82,7 +108,8 @@ $('[data-slider="tSlider"]').each(function() {
             speed: $(this).data('speed'),
             wait: $(this).data('wait') + $(this).data('speed'),
             lines: $(this).data('lines'),
-            effect: $(this).data('effect')
+            effect: $(this).data('effect'),
+            navonhover: $(this).data('navonhover')
     }); 
   });
 })(jQuery);
