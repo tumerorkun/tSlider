@@ -1,13 +1,13 @@
 (function($) {
 	$.fn.slider = function( options ){
-    this.zaman;
-    var ilk = this;var photos =  {}; var $i = 1; var $sa;
+    this.zaman;var ilk = this;var photos =  {}; var $i = 1; var $sa;
     var ayarlar = $.extend({
       // Defaults.
       speed: 1000,
       wait: 2000,
       lines: true,
       autoplay: true,
+      effect: 'fade',
       NavBtnsID: 'tSliderBtns'
     }, options );
     $.getJSON('img/photoList.json', function(data) {
@@ -18,21 +18,24 @@
         $sa = Object.keys(photos).length;
         if(ayarlar.lines == true){ilk.lines();}
     });
-    this.siradaki = function (a){
-      if( a == 'art' ){if( $i >= $sa){$i = 1;}else{$i++;}}
-      else if( a == 'azal'){if( $i <= 1){$i = $sa;}else{$i--;}}
+    this.siradaki = function (a){if( a == 'art' ){if( $i >= $sa){$i = 1;}else{$i++;}}else if( a == 'azal'){if( $i <= 1){$i = $sa;}else{$i--;}}
     }
     this.yukle = function (hangi){
       $('.slide').before('<div id="slide' + hangi + '" class="slide"><img src="' + photos[hangi].location + '/' + photos[hangi].name + '.' + photos[hangi].ext + '"></div>');
       $("#slide"+hangi).children('img').one("load", function() {
-          $('.activeS').animate({
-                  opacity: '0'
-                }, ayarlar.speed, function () {
-                  $('.slide:gt(0)').remove();
-                  $('.slide').addClass('activeS');
-                  $a = $i - 1;
-                  $('#tSliderLines').find('div:eq('+$a+')').addClass('activeL').siblings().removeClass('activeL');
-                });
+
+        switch(ayarlar.effect){
+          case 'fade':
+            $('.activeS').animate({
+                    opacity: '0'
+                  }, ayarlar.speed, function () {
+                    $('.slide:gt(0)').remove();
+                    $('.slide').addClass('activeS');
+                    $a = $i - 1;
+                    $('#tSliderLines').find('div:eq('+$a+')').addClass('activeL').siblings().removeClass('activeL');
+                  });
+            break;
+        }
             }).each(function(){if(this.complete){$(this).load();}});
     }
     this.NavBtns = function(){
@@ -78,7 +81,8 @@ $('[data-slider="tSlider"]').each(function() {
     $(this).slider({
             speed: $(this).data('speed'),
             wait: $(this).data('wait') + $(this).data('speed'),
-            lines: $(this).data('lines')
+            lines: $(this).data('lines'),
+            effect: $(this).data('effect')
     }); 
   });
 })(jQuery);
