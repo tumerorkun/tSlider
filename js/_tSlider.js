@@ -23,16 +23,20 @@
       else if( a == 'azal'){if( $i <= 1){$i = $sa;}else{$i--;}}
     }
     this.yukle = function (hangi){
-      $('.slide').before('<div id="slide' + hangi + '" class="slide"><img src="' + photos[hangi].location + '/' + photos[hangi].name + '.' + photos[hangi].ext + '"></div>').ready(function(){
+      $('.slide').before('<div id="slide' + hangi + '" class="slide"><img src="' + photos[hangi].location + '/' + photos[hangi].name + '.' + photos[hangi].ext + '"></div>');
+      $("#slide"+hangi).children('img').one("load", function() {
           $('.activeS').animate({
                   opacity: '0'
                 }, ayarlar.speed, function () {
-                    $('.slide:gt(0)').remove();
-                    $('.slide').addClass('activeS');
-                });});
+                  $('.slide:gt(0)').remove();
+                  $('.slide').addClass('activeS');
+                  $a = $i - 1;
+                  $('#tSliderLines').find('div:eq('+$a+')').addClass('activeL').siblings().removeClass('activeL');
+                });
+            }).each(function(){if(this.complete){$(this).load();}});
     }
     this.NavBtns = function(){
-      ilk.append('<div id="'+ayarlar.NavBtnsID+'"><div id="prevBtn" data-call="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div><div id="nextBtn" data-call="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div></div>');
+      ilk.append('<div id="tSliderBtns"><div id="prevBtn" class="Navbtn" data-call="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div><div id="nextBtn" class="Navbtn" data-call="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div></div>');
     }
     
     this.lines = function(){
@@ -49,14 +53,10 @@
     this.prev = function(){
       ilk.siradaki('azal');
       ilk.yukle($i);
-      $a = $i - 1;
-      $('#tSliderLines').find('div:eq('+$a+')').addClass('activeL').siblings().removeClass('activeL');
     }
     this.next = function(){
       ilk.siradaki('art');
       ilk.yukle($i);
-      $a = $i - 1;
-      $('#tSliderLines').find('div:eq('+$a+')').addClass('activeL').siblings().removeClass('activeL');
     }
     this.lineBtn = function(which){
       which = parseInt(which.split('slide')[1]);
@@ -70,7 +70,7 @@
     }
     this.hover(function(){ clearInterval(zaman); }, function(){ ilk.autoplay(); });
     ilk.autoplay();ilk.NavBtns();
-    $('#' + ayarlar.NavBtnsID).children().on('click' , function() {
+    $('#tSliderBtns').children().on('click' , function() {
       $.isFunction(ilk[$(this).data('call')]) && ilk[$(this).data('call')]();
     });
 	}
