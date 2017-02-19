@@ -108,6 +108,7 @@
     }
     this.lineBtn = function(which){
       which = parseInt(which.split('slide')[1]);
+      if(which >= $i){basilan = 'next';}else if(which < $i){basilan = 'prev';}
       $i = which;
       ilk.yukle($i);
     }
