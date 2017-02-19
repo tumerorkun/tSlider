@@ -1,5 +1,5 @@
 # tSlider
-jQuery Slider Plugin
+jQuery Slider Plugin controlled via Data Attributes
 
 ### By Orkun Tümer, [tumerorkun](http://tumerorkun.com/) 2016
 
