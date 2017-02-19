@@ -16,7 +16,7 @@ jQuery Slider Plugin controlled via Data Attributes
       <div id="tSlider"></div><!-- id is not neccessary to work with plugin, it is neccessary for style.css -->
 	  ```
 	  ```json
-    jSON;
+    jSON; (json file should be in img folder)
       {"photos":[
       {
       "number":1,
