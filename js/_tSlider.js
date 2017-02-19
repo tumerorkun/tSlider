@@ -1,6 +1,6 @@
 (function($) {
 	$.fn.slider = function( options ){
-    this.zaman;var ilk = this;var photos =  {}; var $i = 1; var $sa;
+    this.zaman;var ilk = this;var photos =  {}; var $i = 1; var $sa;var basilan;
     var ayarlar = $.extend({
       // Varsayılanlar
       speed: 1000,
@@ -24,6 +24,9 @@
       $('.slide').before('<div id="slide' + hangi + '" class="slide"><img src="' + photos[hangi].location + '/' + photos[hangi].name + '.' + photos[hangi].ext + '"></div>');
       $("#slide"+hangi).children('img').one("load", function() {
 
+        var $bas = $i - 1;
+        $('#tSliderLines').find('div:eq('+$bas+')').addClass('activeL').siblings().removeClass('activeL');
+
         switch(ayarlar.effect){
           case 'fade':
             $('.activeS').animate({
@@ -31,12 +34,34 @@
                   }, ayarlar.speed, function () {
                     $('.slide:gt(0)').remove();
                     $('.slide').addClass('activeS');
-                    var $bas = $i - 1;
-                    $('#tSliderLines').find('div:eq('+$bas+')').addClass('activeL').siblings().removeClass('activeL');
                   });
             break;
-        }
+          case 'lineer':
 
+            if(basilan == 'next'){var b = '-'+ilk.width()+'px';
+              $('.slides').find('div:eq(0)').css( 'margin-left' , ilk.width()).animate({
+                    'margin-left':0,
+              },ayarlar.speed);
+              $('.activeS').animate({
+                     'margin-left': b,
+                    }, ayarlar.speed, function () {
+                      $('.slide:gt(0)').remove();
+                      $('.slide').addClass('activeS');
+                    });
+            }else if(basilan == 'prev'){var b = ilk.width()+'px';var c = '-'+ilk.width()+'px';
+              $('.slides').find('div:eq(0)').css( 'margin-left' , c ).animate({
+                    'margin-left':0,
+              },ayarlar.speed);
+              $('.activeS').animate({
+                     'margin-left': b,
+                    }, ayarlar.speed, function () {
+                      $('.slide:gt(0)').remove();
+                      $('.slide').addClass('activeS');
+                    });
+            }
+
+            break;
+        }
       });      
     }
     this.NavBtns = function(){
@@ -56,7 +81,7 @@
               {
                 width:$('#tSlider').width(),
                 'margin-left':0
-              },500); 
+              },150); 
         }
       }
     }
@@ -72,10 +97,12 @@
       })
     }
     this.prev = function(){
+      basilan = 'prev';
       ilk.siradaki('azal');
       ilk.yukle($i);
     }
     this.next = function(){
+      basilan = 'next';
       ilk.siradaki('art');
       ilk.yukle($i);
     }
