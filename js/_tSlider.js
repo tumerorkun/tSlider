@@ -1,14 +1,14 @@
 (function($) {
 	$.fn.slider = function( options ){
-    this.zaman;var ilk = this;var photos =  {}; var $i = 1; var $sa;var basilan;
+    this.zaman;var ilk = this;var photos =  {}; var $i = 1; var $sa;var basilan;var $speed = 1000;
     var ayarlar = $.extend({
       // Varsayılanlar
-      speed: 1000,
-      wait: 2000,
+      speed: $speed,
+      wait: $speed + 2000,
       lines: true,
       autoplay: true,
       navonhover: false,
-      effect: 'fade'
+      effect: 'fade',
     }, options );
     $.getJSON('img/photoList.json', function(data) {
       $.each(data.photos, function(key, val) {
@@ -79,7 +79,7 @@
         else{
           $('#tSliderBtns').animate(
               {
-                width:$('#tSlider').width(),
+                width:ilk.width(),
                 'margin-left':0
               },150); 
         }
@@ -134,10 +134,11 @@
 $('[data-slider="tSlider"]').each(function() { 
     $(this).slider({
             speed: $(this).data('speed'),
-            wait: $(this).data('wait') + $(this).data('speed'),
+            wait: $(this).data('wait'),
             lines: $(this).data('lines'),
             effect: $(this).data('effect'),
-            navonhover: $(this).data('navonhover')
+            navonhover: $(this).data('navonhover'),
+            autoplay: $(this).data('autoplay'),
     }); 
   });
 })(jQuery);
