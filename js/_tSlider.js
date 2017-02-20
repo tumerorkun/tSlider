@@ -6,7 +6,7 @@
       speed: $speed,
       wait: $speed + 2000,
       lines: true,
-      autoplay: true,
+      autoplay: false,
       navonhover: false,
       effect: 'fade',
     }, options );
@@ -18,9 +18,15 @@
         $sa = Object.keys(photos).length;
         if(ayarlar.lines == true){ilk.lines();}
     });
+    this.deactivateBtns = function(){
+      $('#tSliderBtns').css('pointerEvents','none');
+    }
+    this.activateBtns = function(){
+      $('#tSliderBtns').removeAttr('style');
+    }
     this.siradaki = function (a){if( a == 'art' ){if( $i >= $sa){$i = 1;}else{$i++;}}else if( a == 'azal'){if( $i <= 1){$i = $sa;}else{$i--;}}
     }
-    this.yukle = function (hangi){
+    this.yukle = function (hangi){ilk.deactivateBtns();
       $('.slide').before('<div id="slide' + hangi + '" class="slide"><img src="' + photos[hangi].location + '/' + photos[hangi].name + '.' + photos[hangi].ext + '"></div>');
       $("#slide"+hangi).children('img').one("load", function() {
 
@@ -34,6 +40,7 @@
                   }, ayarlar.speed, function () {
                     $('.slide:gt(0)').remove();
                     $('.slide').addClass('activeS');
+                    ilk.activateBtns();
                   });
             break;
           case 'lineer':
@@ -47,6 +54,7 @@
                     }, ayarlar.speed, function () {
                       $('.slide:gt(0)').remove();
                       $('.slide').addClass('activeS');
+                      ilk.activateBtns();
                     });
             }else if(basilan == 'prev'){var b = ilk.width()+'px';var c = '-'+ilk.width()+'px';
               $('.slides').find('div:eq(0)').css( 'margin-left' , c ).animate({
@@ -57,6 +65,7 @@
                     }, ayarlar.speed, function () {
                       $('.slide:gt(0)').remove();
                       $('.slide').addClass('activeS');
+                      ilk.activateBtns();
                     });
             }
 
@@ -113,9 +122,11 @@
       ilk.yukle($i);
     }
     this.autoplay = function() {
+      if(ayarlar.autoplay){
         zaman = setInterval(function() {
           ilk.next();
-      },  ayarlar.wait);
+        },  ayarlar.wait);
+      }
     }
     this.hover(
       function(){
