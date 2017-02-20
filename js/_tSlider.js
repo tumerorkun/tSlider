@@ -6,7 +6,7 @@
       speed: $speed,
       wait: $speed + 2000,
       lines: true,
-      autoplay: false,
+      autoplay: true,
       navonhover: false,
       effect: 'fade',
     }, options );
