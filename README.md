@@ -35,9 +35,9 @@ jQuery Slider Plugin controlled via Data Attributes
 	    
 2. Activate the slider.
 	
-  ```html		
+	  ```html		
     <div id="tSlider" data-slider="tSlider"> <!-- call the function and initialize the tSlider -->
-	```
+	  ```
 		
 3. Control the available options.
 	
